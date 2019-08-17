@@ -8,7 +8,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 
 @RestController
-@RequestMapping("/api/v2/clients")
+@RequestMapping("/api/v1/clients")
 public class ClientController {
 
     private final ClientService clientService;
