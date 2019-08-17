@@ -1,5 +1,5 @@
 
-CREATE TABLE wish_list
+CREATE TABLE wish_list_item
 (
     id SERIAL PRIMARY KEY,
     created_at timestamp with time zone NOT NULL,
