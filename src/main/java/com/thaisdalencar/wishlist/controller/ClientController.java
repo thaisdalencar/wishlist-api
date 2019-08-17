@@ -22,4 +22,14 @@ public class ClientController {
     public Client save(@RequestBody Client client) {
         return clientService.save(client);
     }
+
+    @GetMapping("/{id}")
+    public Client get(@PathVariable("id") long id) {
+        return clientService.findById(id);
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable("id") long id) {
+        clientService.deleteById(id);
+    }
 }

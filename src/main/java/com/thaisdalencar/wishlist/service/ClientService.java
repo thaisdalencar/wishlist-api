@@ -4,6 +4,8 @@ import com.thaisdalencar.wishlist.entity.Client;
 import com.thaisdalencar.wishlist.repository.ClientRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ClientService {
 
@@ -19,5 +21,9 @@ public class ClientService {
 
     public Client findById(long id) {
         return clientRepository.findById(id);
+    }
+
+    public Optional<Long> deleteById(long id) {
+        return clientRepository.deleteById(id);
     }
 }
