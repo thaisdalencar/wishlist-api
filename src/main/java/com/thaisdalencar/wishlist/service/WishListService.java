@@ -1,5 +1,7 @@
 package com.thaisdalencar.wishlist.service;
 
+import com.thaisdalencar.wishlist.client.Product;
+import com.thaisdalencar.wishlist.client.ProductApiClient;
 import com.thaisdalencar.wishlist.entity.WishListItem;
 import com.thaisdalencar.wishlist.repository.ClientRepository;
 import com.thaisdalencar.wishlist.repository.WishListItemRepository;
@@ -13,10 +15,12 @@ public class WishListService {
 
     private final WishListItemRepository wishListItemRepository;
     private final ClientRepository clientRepository;
+    private final ProductApiClient productApiClient;
 
-    public WishListService(WishListItemRepository wishListItemRepository, ClientRepository clientRepository) {
+    public WishListService(WishListItemRepository wishListItemRepository, ClientRepository clientRepository, ProductApiClient productApiClient) {
         this.wishListItemRepository = wishListItemRepository;
         this.clientRepository = clientRepository;
+        this.productApiClient = productApiClient;
     }
 
     public WishListItem save(long clientId, long productId) {
@@ -29,8 +33,9 @@ public class WishListService {
         return wishListItemRepository.findByClientId(clientId);
     }
 
-    public WishListItem findByClientIdAndProductId(long clientId, long productId) {
-        return wishListItemRepository.findByClientIdAndProductId(clientId, productId);
+    public Product findByClientIdAndProductId(long clientId, long productId) {
+//        return wishListItemRepository.findByClientIdAndProductId(clientId, productId);
+        return productApiClient.getProduct();
     }
 
     public Optional<Long> deleteByClientIdAndProductId(long clientId, long productId) {

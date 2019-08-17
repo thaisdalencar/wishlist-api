@@ -1,5 +1,6 @@
 package com.thaisdalencar.wishlist.controller;
 
+import com.thaisdalencar.wishlist.client.Product;
 import com.thaisdalencar.wishlist.entity.WishListItem;
 import com.thaisdalencar.wishlist.service.WishListService;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class WishListController {
     }
 
     @GetMapping("/{productId}")
-    public WishListItem getItem(@PathVariable("clientId") long clientId, @PathVariable("productId") long productId) {
+    public Product getItem(@PathVariable("clientId") long clientId, @PathVariable("productId") long productId) {
         return wishListService.findByClientIdAndProductId(clientId, productId);
     }
 

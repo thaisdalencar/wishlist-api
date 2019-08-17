@@ -16,6 +16,8 @@
 
 	<properties>
 		<java.version>11</java.version>
+		<spring.cloud.starter.openfeign.version>2.1.2.RELEASE</spring.cloud.starter.openfeign.version>
+		<openfeign.version>10.2.3</openfeign.version>
 	</properties>
 
 	<dependencies>
@@ -39,6 +41,16 @@
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-openfeign</artifactId>
+			<version>${spring.cloud.starter.openfeign.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.github.openfeign</groupId>
+			<artifactId>feign-jackson</artifactId>
+			<version>${openfeign.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
