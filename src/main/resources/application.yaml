@@ -6,6 +6,11 @@ spring:
   profiles:
     active: ${ACTIVE_PROFILE:dev}
   jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
     database: POSTGRESQL
     hibernate:
       ddl-auto: none
