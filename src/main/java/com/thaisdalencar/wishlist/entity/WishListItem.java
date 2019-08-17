@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
 
 @Entity
 public class WishListItem extends BaseEntity {
@@ -13,10 +12,14 @@ public class WishListItem extends BaseEntity {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    @NotNull(message = "ProductId not be null")
     private long productId;
 
     public WishListItem() {
+    }
+
+    public WishListItem(Client client, long productId) {
+        this.client = client;
+        this.productId = productId;
     }
 
     public Client getClient() {

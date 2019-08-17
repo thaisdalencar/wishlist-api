@@ -9,7 +9,7 @@ import java.util.List;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
-@RequestMapping("/api/v1/clients/{clientId}/wishes")
+@RequestMapping("/api/v1/clients/{clientId}/favorite-products")
 public class WishListController {
 
     private final WishListService wishListService;
@@ -18,10 +18,10 @@ public class WishListController {
         this.wishListService = wishListService;
     }
 
-    @PostMapping
+    @PostMapping("/{productId}")
     @ResponseStatus(CREATED)
-    public WishListItem save(@RequestBody WishListItem wishListItem) {
-        return wishListService.save(wishListItem);
+    public WishListItem save(@PathVariable("clientId") long clientId, @PathVariable("productId") long productId) {
+        return wishListService.save(clientId, productId);
     }
 
     @GetMapping
@@ -29,14 +29,13 @@ public class WishListController {
         return wishListService.findByClientId(clientId);
     }
 
-    @GetMapping("/{id}")
-    public WishListItem getItem(@PathVariable("clientId") long clientId, @PathVariable("id") long id) {
-        return wishListService.findById(id);
+    @GetMapping("/{productId}")
+    public WishListItem getItem(@PathVariable("clientId") long clientId, @PathVariable("productId") long productId) {
+        return wishListService.findByClientIdAndProductId(clientId, productId);
     }
 
     @DeleteMapping("/{id}")
     public void delete(@PathVariable("clientId") long clientId, @PathVariable("id") long id) {
         wishListService.deleteById(id);
     }
-
 }

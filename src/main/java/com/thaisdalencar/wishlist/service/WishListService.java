@@ -1,6 +1,7 @@
 package com.thaisdalencar.wishlist.service;
 
 import com.thaisdalencar.wishlist.entity.WishListItem;
+import com.thaisdalencar.wishlist.repository.ClientRepository;
 import com.thaisdalencar.wishlist.repository.WishListItemRepository;
 import org.springframework.stereotype.Service;
 
@@ -11,12 +12,16 @@ import java.util.Optional;
 public class WishListService {
 
     private final WishListItemRepository wishListItemRepository;
+    private final ClientRepository clientRepository;
 
-    public WishListService(WishListItemRepository wishListItemRepository) {
+    public WishListService(WishListItemRepository wishListItemRepository, ClientRepository clientRepository) {
         this.wishListItemRepository = wishListItemRepository;
+        this.clientRepository = clientRepository;
     }
 
-    public WishListItem save(WishListItem wishListItem) {
+    public WishListItem save(long clientId, long productId) {
+        var client = clientRepository.findById(clientId);
+        var wishListItem = new WishListItem(client, productId); //todo: tem como melhorar isso? nao precisar fazer uma consulta no client
         return wishListItemRepository.save(wishListItem);
     }
 
@@ -24,8 +29,8 @@ public class WishListService {
         return wishListItemRepository.findByClientId(clientId);
     }
 
-    public WishListItem findById(long id) {
-        return wishListItemRepository.findById(id);
+    public WishListItem findByClientIdAndProductId(long clientId, long productId) {
+        return wishListItemRepository.findByClientIdAndProductId(clientId, productId);
     }
 
     public Optional<Long> deleteById(long id) {
