@@ -12,12 +12,12 @@ public class WishListItem extends BaseEntity {
     @JoinColumn(name = "client_id")
     private Client client;
 
-    private long productId;
+    private String productId;
 
     public WishListItem() {
     }
 
-    public WishListItem(Client client, long productId) {
+    public WishListItem(Client client, String productId) {
         this.client = client;
         this.productId = productId;
     }
@@ -26,7 +26,7 @@ public class WishListItem extends BaseEntity {
         return client;
     }
 
-    public long getProductId() {
+    public String getProductId() {
         return productId;
     }
 }

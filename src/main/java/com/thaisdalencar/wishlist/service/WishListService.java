@@ -23,7 +23,7 @@ public class WishListService {
         this.productApiClient = productApiClient;
     }
 
-    public WishListItem save(long clientId, long productId) {
+    public WishListItem save(long clientId, String productId) {
         var client = clientRepository.findById(clientId);
         var wishListItem = new WishListItem(client, productId); //todo: tem como melhorar isso? nao precisar fazer uma consulta no client
         return wishListItemRepository.save(wishListItem);
@@ -33,12 +33,12 @@ public class WishListService {
         return wishListItemRepository.findByClientId(clientId);
     }
 
-    public Product findByClientIdAndProductId(long clientId, long productId) {
+    public Product findByClientIdAndProductId(long clientId, String productId) {
 //        return wishListItemRepository.findByClientIdAndProductId(clientId, productId);
-        return productApiClient.getById("1bf0f365-fbdd-4e21-9786-da459d78dd1f");
+        return productApiClient.getById(productId);
     }
 
-    public Optional<Long> deleteByClientIdAndProductId(long clientId, long productId) {
+    public Optional<Long> deleteByClientIdAndProductId(long clientId, String productId) {
         return wishListItemRepository.deleteByClientIdAndProductId(clientId, productId);
     }
 

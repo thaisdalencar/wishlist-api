@@ -21,7 +21,7 @@ public class WishListController {
 
     @PostMapping("/{productId}")
     @ResponseStatus(CREATED)
-    public WishListItem save(@PathVariable("clientId") long clientId, @PathVariable("productId") long productId) {
+    public WishListItem save(@PathVariable("clientId") long clientId, @PathVariable("productId") String productId) {
         return wishListService.save(clientId, productId);
     }
 
@@ -31,12 +31,12 @@ public class WishListController {
     }
 
     @GetMapping("/{productId}")
-    public Product getItem(@PathVariable("clientId") long clientId, @PathVariable("productId") long productId) {
+    public Product getItem(@PathVariable("clientId") long clientId, @PathVariable("productId") String productId) {
         return wishListService.findByClientIdAndProductId(clientId, productId);
     }
 
     @DeleteMapping("/{productId}")
-    public void delete(@PathVariable("clientId") long clientId, @PathVariable("productId") long productId) {
+    public void delete(@PathVariable("clientId") long clientId, @PathVariable("productId") String productId) {
         wishListService.deleteByClientIdAndProductId(clientId, productId);
     }
 }
