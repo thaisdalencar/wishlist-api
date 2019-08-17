@@ -35,7 +35,7 @@ public class WishListService {
 
     public Product findByClientIdAndProductId(long clientId, long productId) {
 //        return wishListItemRepository.findByClientIdAndProductId(clientId, productId);
-        return productApiClient.getProduct();
+        return productApiClient.getById("1bf0f365-fbdd-4e21-9786-da459d78dd1f");
     }
 
     public Optional<Long> deleteByClientIdAndProductId(long clientId, long productId) {

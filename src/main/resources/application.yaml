@@ -18,3 +18,7 @@ spring:
   datasource:
     platform: postgres
     driverClassName: org.postgresql.Driver
+
+clients:
+  products:
+    url: http://challenge-api.luizalabs.com
