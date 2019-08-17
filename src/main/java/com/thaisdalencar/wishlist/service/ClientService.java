@@ -4,6 +4,7 @@ import com.thaisdalencar.wishlist.entity.Client;
 import com.thaisdalencar.wishlist.repository.ClientRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,11 +20,22 @@ public class ClientService {
         return clientRepository.save(client);
     }
 
+    public List<Client> findAll() {
+        return clientRepository.findAll();
+    }
+
     public Client findById(long id) {
         return clientRepository.findById(id);
     }
 
     public Optional<Long> deleteById(long id) {
         return clientRepository.deleteById(id);
+    }
+
+    public Client updateById(Client client, long id) {
+        var savedClient = findById(id);
+        savedClient.setName(client.getName());
+//        savedClient.setEmail(client.getEmail());
+        return clientRepository.save(client);
     }
 }

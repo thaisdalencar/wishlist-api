@@ -15,16 +15,19 @@ public class Client extends BaseEntity {
     public Client() {
     }
 
-    public Client(String name, String email) {
-        this.name = name;
-        this.email = email.toLowerCase();
-    }
-
     public String getName() {
         return name;
     }
 
     public String getEmail() {
         return email;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

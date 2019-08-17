@@ -29,6 +29,14 @@ public abstract class BaseEntity {
     public BaseEntity() {
     }
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public Date getCreatedAt() {
         return createdAt;
     }
