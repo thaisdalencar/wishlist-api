@@ -24,9 +24,19 @@ public class WishListService {
     }
 
     public WishListItem save(long clientId, String productId) {
-        var client = clientRepository.findById(clientId);
-        var wishListItem = new WishListItem(client, productId); //todo: tem como melhorar isso? nao precisar fazer uma consulta no client
-        return wishListItemRepository.save(wishListItem);
+        var isValid = validateProduct(productId);
+        if (isValid) {
+            var client = clientRepository.findById(clientId);
+            var wishListItem = new WishListItem(client, productId); //todo: tem como melhorar isso? nao precisar fazer uma consulta no client
+            return wishListItemRepository.save(wishListItem);
+        }
+
+        return null; //todo: throw 403 status
+    }
+
+    private boolean validateProduct(String productId) {
+        var product = productApiClient.getById(productId);
+        return product != null;
     }
 
     public List<WishListItem> findByClientId(long clientId) {
