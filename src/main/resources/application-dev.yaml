@@ -1,0 +1,9 @@
+
+
+spring:
+  jpa:
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/wishlist
+    username: wishlist
+    password: 4nRuZR4sRNlXi7v5LhrlNG9IW5c2IA2L1u5CUY
