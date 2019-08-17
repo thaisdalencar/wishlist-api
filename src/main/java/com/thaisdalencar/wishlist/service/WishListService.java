@@ -33,8 +33,8 @@ public class WishListService {
         return wishListItemRepository.findByClientIdAndProductId(clientId, productId);
     }
 
-    public Optional<Long> deleteById(long id) {
-        return wishListItemRepository.deleteById(id);
+    public Optional<Long> deleteByClientIdAndProductId(long clientId, long productId) {
+        return wishListItemRepository.deleteByClientIdAndProductId(clientId, productId);
     }
 
 }

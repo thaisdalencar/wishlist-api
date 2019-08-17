@@ -34,8 +34,8 @@ public class WishListController {
         return wishListService.findByClientIdAndProductId(clientId, productId);
     }
 
-    @DeleteMapping("/{id}")
-    public void delete(@PathVariable("clientId") long clientId, @PathVariable("id") long id) {
-        wishListService.deleteById(id);
+    @DeleteMapping("/{productId}")
+    public void delete(@PathVariable("clientId") long clientId, @PathVariable("productId") long productId) {
+        wishListService.deleteByClientIdAndProductId(clientId, productId);
     }
 }
