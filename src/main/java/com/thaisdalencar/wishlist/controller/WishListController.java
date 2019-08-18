@@ -26,7 +26,7 @@ public class WishListController {
     }
 
     @GetMapping
-    public List<WishListItem> get(@PathVariable("clientId") long clientId) {
+    public List<Product> get(@PathVariable("clientId") long clientId) {
         return wishListService.findByClientId(clientId);
     }
 

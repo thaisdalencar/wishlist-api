@@ -1,17 +1,18 @@
 package com.thaisdalencar.wishlist.client;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 public class Product {
 
     private String id;
     private String title;
     private String image;
     private double price;
+    @JsonInclude(Include.NON_NULL)
+    private double reviewScore;
 
-    public Product(String id, String title, String image, double price) {
-        this.id = id;
-        this.title = title;
-        this.image = image;
-        this.price = price;
+    public Product() {
     }
 
     public String getId() {
@@ -28,6 +29,10 @@ public class Product {
 
     public double getPrice() {
         return price;
+    }
+
+    public double getReviewScore() {
+        return reviewScore;
     }
 }
 

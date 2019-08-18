@@ -1,6 +1,7 @@
 package com.thaisdalencar.wishlist.service;
 
 import com.thaisdalencar.wishlist.entity.Client;
+import com.thaisdalencar.wishlist.exception.NotFoundException;
 import com.thaisdalencar.wishlist.repository.ClientRepository;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +26,8 @@ public class ClientService {
     }
 
     public Client findById(long id) {
-        return clientRepository.findById(id);
+        return clientRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(String.format("Not found client with id: %d", id)));
     }
 
     public Optional<Long> deleteById(long id) {

@@ -3,10 +3,12 @@ package com.thaisdalencar.wishlist.service;
 import com.thaisdalencar.wishlist.client.Product;
 import com.thaisdalencar.wishlist.client.ProductApiClient;
 import com.thaisdalencar.wishlist.entity.WishListItem;
+import com.thaisdalencar.wishlist.exception.NotFoundException;
 import com.thaisdalencar.wishlist.repository.ClientRepository;
 import com.thaisdalencar.wishlist.repository.WishListItemRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,20 +16,20 @@ import java.util.Optional;
 public class WishListService {
 
     private final WishListItemRepository wishListItemRepository;
-    private final ClientRepository clientRepository;
+    private final ClientService clientService;
     private final ProductApiClient productApiClient;
 
-    public WishListService(WishListItemRepository wishListItemRepository, ClientRepository clientRepository, ProductApiClient productApiClient) {
+    public WishListService(WishListItemRepository wishListItemRepository, ClientService clientService, ProductApiClient productApiClient) {
         this.wishListItemRepository = wishListItemRepository;
-        this.clientRepository = clientRepository;
+        this.clientService = clientService;
         this.productApiClient = productApiClient;
     }
 
     public WishListItem save(long clientId, String productId) {
         var isValid = validateProduct(productId);
         if (isValid) {
-            var client = clientRepository.findById(clientId);
-            var wishListItem = new WishListItem(client, productId); //todo: tem como melhorar isso? nao precisar fazer uma consulta no client
+            var client = clientService.findById(clientId);  //todo: tem como melhorar isso? nao precisar fazer uma consulta no client
+            var wishListItem = new WishListItem(client, productId);
             return wishListItemRepository.save(wishListItem);
         }
 
@@ -39,13 +41,24 @@ public class WishListService {
         return product != null;
     }
 
-    public List<WishListItem> findByClientId(long clientId) {
-        return wishListItemRepository.findByClientId(clientId);
+    public List<Product> findByClientId(long clientId) {
+        var wishListItems = wishListItemRepository.findByClientId(clientId);
+        var products = new ArrayList<Product>();
+        wishListItems.forEach(item -> {
+            var product = productApiClient.getById(item.getProductId());
+            products.add(product);
+        });
+
+        return products;
     }
 
     public Product findByClientIdAndProductId(long clientId, String productId) {
-//        return wishListItemRepository.findByClientIdAndProductId(clientId, productId);
-        return productApiClient.getById(productId);
+        var wishListItem = wishListItemRepository.findByClientIdAndProductId(clientId, productId);
+        if (wishListItem != null) {
+            return productApiClient.getById(productId);
+        }
+
+        return null; //todo: throw 403
     }
 
     public Optional<Long> deleteByClientIdAndProductId(long clientId, String productId) {
