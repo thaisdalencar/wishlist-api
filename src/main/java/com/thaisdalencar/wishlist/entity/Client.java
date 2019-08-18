@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Entity
@@ -13,7 +14,7 @@ public class Client extends BaseEntity {
     @NotEmpty(message = "Name not be empty")
     private String name;
 
-    @NotEmpty(message = "Email  not be empty")
+    @Pattern(regexp=".+@.+\\..+", message="Email should be valid")
     private String email;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "client", cascade = CascadeType.REMOVE, orphanRemoval = true)
