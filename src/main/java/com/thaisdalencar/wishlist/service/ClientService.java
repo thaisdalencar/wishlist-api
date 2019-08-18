@@ -6,6 +6,7 @@ import com.thaisdalencar.wishlist.exception.NotFoundException;
 import com.thaisdalencar.wishlist.repository.ClientRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -25,7 +26,7 @@ public class ClientService {
         try {
             return clientRepository.save(client);
         } catch (ConstraintViolationException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+            throw new ResponseStatusException(HttpStatus.UNPROCESSABLE_ENTITY, e.getMessage());
         } catch (DataIntegrityViolationException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT);
         }
@@ -41,7 +42,10 @@ public class ClientService {
     }
 
     public void deleteById(long id) {
-        clientRepository.deleteById(id);
+        var deleted = clientRepository.deleteById(id);
+        if (deleted == 0) {
+            throw  new NotFoundException(String.format("Not found clientId: %d", id));
+        }
     }
 
     public Client updateById(Client client, long id) {

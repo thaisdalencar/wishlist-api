@@ -21,5 +21,5 @@ public interface WishListItemRepository extends PagingAndSortingRepository<WishL
 
     @Transactional
     @EntityGraph(attributePaths = { "client" })
-    Optional<Long> deleteByClientIdAndProductId(long clientId, String productId);
+    Long deleteByClientIdAndProductId(long clientId, String productId);
 }

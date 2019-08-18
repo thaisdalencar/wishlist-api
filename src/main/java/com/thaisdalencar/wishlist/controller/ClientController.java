@@ -3,9 +3,8 @@ package com.thaisdalencar.wishlist.controller;
 import com.thaisdalencar.wishlist.controller.request.PaginationRequest;
 import com.thaisdalencar.wishlist.entity.Client;
 import com.thaisdalencar.wishlist.service.ClientService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -27,7 +26,7 @@ public class ClientController {
     }
 
     @GetMapping
-    public List<Client> getAll(PaginationRequest page) {
+    public Page<Client> getAll(PaginationRequest page) {
         return clientService.findAll(page);
     }
 

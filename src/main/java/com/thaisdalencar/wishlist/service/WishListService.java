@@ -68,6 +68,9 @@ public class WishListService {
     }
 
     public void deleteByClientIdAndProductId(long clientId, String productId) {
-        wishListItemRepository.deleteByClientIdAndProductId(clientId, productId);
+        var deleted = wishListItemRepository.deleteByClientIdAndProductId(clientId, productId);
+        if (deleted == 0) {
+           throw  new NotFoundException(String.format("Not found productId: %s in wish list of clientId: %d", productId, clientId));
+        }
     }
 }

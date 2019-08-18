@@ -8,9 +8,9 @@ public class Product {
     private String id;
     private String title;
     private String image;
-    private double price;
+    private Double price;
     @JsonInclude(Include.NON_NULL)
-    private double reviewScore;
+    private Double reviewScore;
 
     public Product() {
     }
@@ -27,11 +27,11 @@ public class Product {
         return image;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public double getReviewScore() {
+    public Double getReviewScore() {
         return reviewScore;
     }
 }
