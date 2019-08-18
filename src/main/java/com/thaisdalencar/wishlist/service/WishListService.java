@@ -51,6 +51,10 @@ public class WishListService {
 
     public Page<Product> findByClientId(long clientId, PaginationRequest page) {
         var wishListItems = wishListItemRepository.findByClientId(clientId, page.getPagination());
+        if (wishListItems.getTotalElements() == 0) {
+            throw new NotFoundException("Not found favorite products");
+        }
+
         var products = new ArrayList<Product>();
         wishListItems.forEach(item -> {
             var product = productApiClient.getById(item.getProductId());

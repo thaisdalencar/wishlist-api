@@ -4,7 +4,7 @@ server:
 
 spring:
   profiles:
-    active: ${ACTIVE_PROFILE:test}
+    active: ${ACTIVE_PROFILE:dev}
   jpa:
     properties:
       hibernate:

@@ -34,7 +34,12 @@ public class ClientService {
     }
 
     public Page<Client> findAll(PaginationRequest page) {
-        return clientRepository.findAll(page.getPagination());
+        var clients = clientRepository.findAll(page.getPagination());
+        if (clients.getTotalElements() == 0) {
+            throw new NotFoundException("Not found clients");
+        }
+
+        return clients;
     }
 
     public Client findById(long id) {
