@@ -3,18 +3,19 @@ package com.thaisdalencar.wishlist.service;
 import com.thaisdalencar.wishlist.client.Product;
 import com.thaisdalencar.wishlist.client.ProductApiClient;
 import com.thaisdalencar.wishlist.controller.request.FavoriteProductRequest;
+import com.thaisdalencar.wishlist.controller.request.PaginationRequest;
 import com.thaisdalencar.wishlist.entity.WishListItem;
 import com.thaisdalencar.wishlist.exception.InvalidProductException;
 import com.thaisdalencar.wishlist.exception.NotFoundException;
 import com.thaisdalencar.wishlist.repository.WishListItemRepository;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class WishListService {
@@ -31,7 +32,7 @@ public class WishListService {
 
     public WishListItem save(long clientId, FavoriteProductRequest favoriteProductRequest) {
         try {
-            var product = getProductDetails(favoriteProductRequest.getProductId());
+            var product = getValidProduct(favoriteProductRequest.getProductId());
             var client = clientService.findById(clientId);  //todo: tem como melhorar isso? nao precisar fazer uma consulta no client
             var wishListItem = new WishListItem(client, product.getId());
             return wishListItemRepository.save(wishListItem);
@@ -40,7 +41,7 @@ public class WishListService {
         }
     }
 
-    private Product getProductDetails(String productId) {
+    private Product getValidProduct(String productId) {
         try {
             return productApiClient.getById(productId);
         } catch (RuntimeException e) {
@@ -48,22 +49,22 @@ public class WishListService {
         }
     }
 
-    public List<Product> findByClientId(long clientId) {
-        var wishListItems = wishListItemRepository.findByClientId(clientId);
+    public Page<Product> findByClientId(long clientId, PaginationRequest page) {
+        var wishListItems = wishListItemRepository.findByClientId(clientId, page.getPagination());
         var products = new ArrayList<Product>();
         wishListItems.forEach(item -> {
-            var product = getProductDetails(item.getProductId());
+            var product = productApiClient.getById(item.getProductId());
             products.add(product);
         });
 
-        return products;
+        return new PageImpl<Product>(products, page.getPagination(), page.getSize());
     }
 
     public Product findByClientIdAndProductId(long clientId, String productId) {
         var wishListItem = wishListItemRepository.findByClientIdAndProductId(clientId, productId)
                 .orElseThrow(() -> new NotFoundException(String.format("Not found productId: %s in wish list of clientId: %d", productId, clientId)));
 
-        return getProductDetails(wishListItem.getProductId());
+        return getValidProduct(wishListItem.getProductId());
     }
 
     public void deleteByClientIdAndProductId(long clientId, String productId) {

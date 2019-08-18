@@ -1,15 +1,16 @@
 package com.thaisdalencar.wishlist.service;
 
+import com.thaisdalencar.wishlist.controller.request.PaginationRequest;
 import com.thaisdalencar.wishlist.entity.Client;
 import com.thaisdalencar.wishlist.exception.NotFoundException;
 import com.thaisdalencar.wishlist.repository.ClientRepository;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.ConstraintViolationException;
-import java.util.List;
 
 @Service
 public class ClientService {
@@ -30,8 +31,8 @@ public class ClientService {
         }
     }
 
-    public List<Client> findAll() {
-        return clientRepository.findAll();
+    public Page<Client> findAll(PaginationRequest page) {
+        return clientRepository.findAll(page);
     }
 
     public Client findById(long id) {

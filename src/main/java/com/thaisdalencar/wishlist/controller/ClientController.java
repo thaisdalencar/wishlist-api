@@ -1,5 +1,6 @@
 package com.thaisdalencar.wishlist.controller;
 
+import com.thaisdalencar.wishlist.controller.request.PaginationRequest;
 import com.thaisdalencar.wishlist.entity.Client;
 import com.thaisdalencar.wishlist.service.ClientService;
 import org.springframework.web.bind.annotation.*;
@@ -26,8 +27,8 @@ public class ClientController {
     }
 
     @GetMapping
-    public List<Client> getAll() {
-        return clientService.findAll();
+    public List<Client> getAll(PaginationRequest page) {
+        return clientService.findAll(page);
     }
 
     @GetMapping("/{id}")

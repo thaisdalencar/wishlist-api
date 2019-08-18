@@ -2,11 +2,11 @@ package com.thaisdalencar.wishlist.controller;
 
 import com.thaisdalencar.wishlist.client.Product;
 import com.thaisdalencar.wishlist.controller.request.FavoriteProductRequest;
+import com.thaisdalencar.wishlist.controller.request.PaginationRequest;
 import com.thaisdalencar.wishlist.entity.WishListItem;
 import com.thaisdalencar.wishlist.service.WishListService;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -27,8 +27,8 @@ public class WishListController {
     }
 
     @GetMapping
-    public List<Product> get(@PathVariable("clientId") long clientId) {
-        return wishListService.findByClientId(clientId);
+    public Page<Product> get(@PathVariable("clientId") long clientId, PaginationRequest page) {
+        return wishListService.findByClientId(clientId, page);
     }
 
     @GetMapping("/{productId}")
