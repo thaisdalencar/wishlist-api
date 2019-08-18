@@ -17,6 +17,9 @@ public class Client extends BaseEntity {
     @NotEmpty(message = "Email  not be empty")
     private String email;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    private List<WishListItem> wishList;
+
     public Client() {
     }
 
