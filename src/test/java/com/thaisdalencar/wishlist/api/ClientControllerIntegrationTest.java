@@ -12,14 +12,13 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -52,5 +51,32 @@ public class ClientControllerIntegrationTest {
         var clientA = new Client("User A", "usera@email.com");
         var clientB = new Client("User B", "userb@email.com");
         clientRepository.saveAll(List.of(clientA, clientB));
+    }
+
+    @Test
+    public void given_request_by_specific_client_then_return_info_about_him() throws Exception {
+        saveMockClients();
+        var clients = clientRepository.findAll();
+        var client = clients.iterator().next();
+        mvc.perform(get(String.format("/api/v1/clients/%d", client.getId())))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(jsonPath("$.name", is(client.getName())))
+                .andExpect(jsonPath("$.email", is(client.getEmail())));
+    }
+
+    @Test
+    public void given_request_for_delete_client_when_exist_then_return_ok() throws Exception {
+        saveMockClients();
+        var clients = clientRepository.findAll();
+        var client = clients.iterator().next();
+        mvc.perform(delete(String.format("/api/v1/clients/%d", client.getId())))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void given_request_for_delete_client_when_not_exist_then_return_not_found() throws Exception {
+        mvc.perform(delete(String.format("/api/v1/clients/100")))
+                .andExpect(status().is4xxClientError());
     }
 }

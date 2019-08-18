@@ -1,6 +1,6 @@
 
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5430/wishlist_test
-    username: postgres
-    password: postgres
+    url: jdbc:postgresql://localhost:5432/wishlist_test
+    username: wishlist
+    password: 4nRuZR4sRNlXi7v5LhrlNG9IW5c2IA2L1u5CUY

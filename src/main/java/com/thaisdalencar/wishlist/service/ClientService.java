@@ -5,6 +5,7 @@ import com.thaisdalencar.wishlist.entity.Client;
 import com.thaisdalencar.wishlist.exception.NotFoundException;
 import com.thaisdalencar.wishlist.repository.ClientRepository;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -42,9 +43,10 @@ public class ClientService {
     }
 
     public void deleteById(long id) {
-        var deleted = clientRepository.deleteById(id);
-        if (deleted == 0) {
-            throw  new NotFoundException(String.format("Not found clientId: %d", id));
+        try {
+            clientRepository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new NotFoundException(String.format("Not found clientId: %d", id));
         }
     }
 

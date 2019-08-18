@@ -15,5 +15,5 @@ public interface ClientRepository  extends PagingAndSortingRepository<Client, Lo
 
     Page<Client> findAll(Pageable page);
 
-    Long deleteById(long id);
+    void deleteById(long id);
 }

@@ -24,4 +24,8 @@ public abstract class BaseEntity {
 //    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSS")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedAt;
+
+    public long getId() {
+        return id;
+    }
 }
