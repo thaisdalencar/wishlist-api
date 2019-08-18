@@ -3,10 +3,12 @@ package com.thaisdalencar.wishlist.service;
 import com.thaisdalencar.wishlist.entity.Client;
 import com.thaisdalencar.wishlist.exception.NotFoundException;
 import com.thaisdalencar.wishlist.repository.ClientRepository;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ClientService {
@@ -18,7 +20,11 @@ public class ClientService {
     }
 
     public Client save(Client client) {
-        return clientRepository.save(client);
+        try {
+            return clientRepository.save(client);
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
+        }
     }
 
     public List<Client> findAll() {
@@ -38,7 +44,7 @@ public class ClientService {
     public Client updateById(Client client, long id) {
         var savedClient = findById(id);
         savedClient.setName(client.getName());
-//        savedClient.setEmail(client.getEmail());
+        savedClient.setEmail(client.getEmail());
         return clientRepository.save(client);
     }
 }

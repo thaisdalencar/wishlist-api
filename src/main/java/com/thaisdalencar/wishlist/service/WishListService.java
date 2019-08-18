@@ -6,7 +6,10 @@ import com.thaisdalencar.wishlist.entity.WishListItem;
 import com.thaisdalencar.wishlist.exception.InvalidProductException;
 import com.thaisdalencar.wishlist.exception.NotFoundException;
 import com.thaisdalencar.wishlist.repository.WishListItemRepository;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,10 +29,14 @@ public class WishListService {
     }
 
     public WishListItem save(long clientId, String productId) {
-        var product = getProductDetails(productId);
-        var client = clientService.findById(clientId);  //todo: tem como melhorar isso? nao precisar fazer uma consulta no client
-        var wishListItem = new WishListItem(client, product.getId());
-        return wishListItemRepository.save(wishListItem);
+        try {
+            var product = getProductDetails(productId);
+            var client = clientService.findById(clientId);  //todo: tem como melhorar isso? nao precisar fazer uma consulta no client
+            var wishListItem = new WishListItem(client, product.getId());
+            return wishListItemRepository.save(wishListItem);
+        } catch (DataIntegrityViolationException e) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT);
+        }
     }
 
     private Product getProductDetails(String productId) {
