@@ -3,8 +3,8 @@ package com.thaisdalencar.wishlist.service;
 import com.thaisdalencar.wishlist.client.Product;
 import com.thaisdalencar.wishlist.client.ProductApiClient;
 import com.thaisdalencar.wishlist.entity.WishListItem;
+import com.thaisdalencar.wishlist.exception.InvalidProductException;
 import com.thaisdalencar.wishlist.exception.NotFoundException;
-import com.thaisdalencar.wishlist.repository.ClientRepository;
 import com.thaisdalencar.wishlist.repository.WishListItemRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,19 +26,18 @@ public class WishListService {
     }
 
     public WishListItem save(long clientId, String productId) {
-        var isValid = validateProduct(productId);
-        if (isValid) {
-            var client = clientService.findById(clientId);  //todo: tem como melhorar isso? nao precisar fazer uma consulta no client
-            var wishListItem = new WishListItem(client, productId);
-            return wishListItemRepository.save(wishListItem);
-        }
-
-        return null; //todo: throw 403 status
+        var product = getProductDetails(productId);
+        var client = clientService.findById(clientId);  //todo: tem como melhorar isso? nao precisar fazer uma consulta no client
+        var wishListItem = new WishListItem(client, product.getId());
+        return wishListItemRepository.save(wishListItem);
     }
 
-    private boolean validateProduct(String productId) {
-        var product = productApiClient.getById(productId);
-        return product != null;
+    private Product getProductDetails(String productId) {
+        try {
+            return productApiClient.getById(productId);
+        } catch (RuntimeException e) {
+            throw new InvalidProductException(String.format("ProductId: %s not exist", productId));
+        }
     }
 
     public List<Product> findByClientId(long clientId) {
@@ -53,12 +52,10 @@ public class WishListService {
     }
 
     public Product findByClientIdAndProductId(long clientId, String productId) {
-        var wishListItem = wishListItemRepository.findByClientIdAndProductId(clientId, productId);
-        if (wishListItem != null) {
-            return productApiClient.getById(productId);
-        }
+        var wishListItem = wishListItemRepository.findByClientIdAndProductId(clientId, productId)
+                .orElseThrow(() -> new NotFoundException(String.format("Not found productId: %s in wish list of clientId: %d", productId, clientId)));
 
-        return null; //todo: throw 403
+        return getProductDetails(wishListItem.getProductId());
     }
 
     public Optional<Long> deleteByClientIdAndProductId(long clientId, String productId) {

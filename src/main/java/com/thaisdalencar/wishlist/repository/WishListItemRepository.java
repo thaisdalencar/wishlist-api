@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface WishListItemRepository extends CrudRepository<WishListItem, Long> {
 
     @EntityGraph(attributePaths = { "client" })
-    WishListItem findByClientIdAndProductId(long clientId, String productId);
+    Optional<WishListItem> findByClientIdAndProductId(long clientId, String productId);
 
     @EntityGraph(attributePaths = { "client" })
     List<WishListItem> findByClientId(long clientId);

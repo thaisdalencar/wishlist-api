@@ -27,7 +27,7 @@ public class ClientService {
 
     public Client findById(long id) {
         return clientRepository.findById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("Not found client with id: %d", id)));
+                .orElseThrow(() -> new NotFoundException(String.format("Not found clientId: %d", id)));
     }
 
     public Optional<Long> deleteById(long id) {
