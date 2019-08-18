@@ -12,7 +12,12 @@ public class Product {
     @JsonInclude(Include.NON_NULL)
     private Double reviewScore;
 
-    public Product() {
+    public Product(String id, String title, String image, Double price, Double reviewScore) {
+        this.id = id;
+        this.title = title;
+        this.image = image;
+        this.price = price;
+        this.reviewScore = reviewScore;
     }
 
     public String getId() {
