@@ -2,6 +2,7 @@ package com.thaisdalencar.wishlist.service;
 
 import com.thaisdalencar.wishlist.client.Product;
 import com.thaisdalencar.wishlist.client.ProductApiClient;
+import com.thaisdalencar.wishlist.controller.request.FavoriteProductRequest;
 import com.thaisdalencar.wishlist.entity.WishListItem;
 import com.thaisdalencar.wishlist.exception.InvalidProductException;
 import com.thaisdalencar.wishlist.exception.NotFoundException;
@@ -28,9 +29,9 @@ public class WishListService {
         this.productApiClient = productApiClient;
     }
 
-    public WishListItem save(long clientId, String productId) {
+    public WishListItem save(long clientId, FavoriteProductRequest favoriteProductRequest) {
         try {
-            var product = getProductDetails(productId);
+            var product = getProductDetails(favoriteProductRequest.getProductId());
             var client = clientService.findById(clientId);  //todo: tem como melhorar isso? nao precisar fazer uma consulta no client
             var wishListItem = new WishListItem(client, product.getId());
             return wishListItemRepository.save(wishListItem);

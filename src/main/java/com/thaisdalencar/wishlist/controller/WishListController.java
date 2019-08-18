@@ -1,6 +1,7 @@
 package com.thaisdalencar.wishlist.controller;
 
 import com.thaisdalencar.wishlist.client.Product;
+import com.thaisdalencar.wishlist.controller.request.FavoriteProductRequest;
 import com.thaisdalencar.wishlist.entity.WishListItem;
 import com.thaisdalencar.wishlist.service.WishListService;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +20,10 @@ public class WishListController {
         this.wishListService = wishListService;
     }
 
-    @PostMapping("/{productId}")
+    @PostMapping
     @ResponseStatus(CREATED)
-    public WishListItem save(@PathVariable("clientId") long clientId, @PathVariable("productId") String productId) {
-        return wishListService.save(clientId, productId);
+    public WishListItem save(@PathVariable("clientId") long clientId, @RequestBody FavoriteProductRequest favoriteProductRequest) {
+        return wishListService.save(clientId, favoriteProductRequest);
     }
 
     @GetMapping
