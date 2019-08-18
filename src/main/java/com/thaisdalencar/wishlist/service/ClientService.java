@@ -32,7 +32,7 @@ public class ClientService {
     }
 
     public Page<Client> findAll(PaginationRequest page) {
-        return clientRepository.findAll(page);
+        return clientRepository.findAll(page.getPagination());
     }
 
     public Client findById(long id) {
