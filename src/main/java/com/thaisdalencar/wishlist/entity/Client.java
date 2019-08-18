@@ -23,6 +23,11 @@ public class Client extends BaseEntity {
     public Client() {
     }
 
+    public Client(@NotEmpty(message = "Name not be empty") String name, @Pattern(regexp = ".+@.+\\..+", message = "Email should be valid") String email) {
+        this.name = name;
+        this.email = email;
+    }
+
     public String getName() {
         return name;
     }
