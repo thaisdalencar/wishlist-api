@@ -14,5 +14,5 @@ public interface ClientRepository  extends CrudRepository<Client, Long> {
 
     List<Client> findAll();
 
-    Optional<Long> deleteById(long id);
+    void deleteById(long id);
 }

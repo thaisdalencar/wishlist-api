@@ -51,7 +51,7 @@ public class WishListService {
         var wishListItems = wishListItemRepository.findByClientId(clientId);
         var products = new ArrayList<Product>();
         wishListItems.forEach(item -> {
-            var product = productApiClient.getById(item.getProductId());
+            var product = getProductDetails(item.getProductId());
             products.add(product);
         });
 
@@ -65,8 +65,7 @@ public class WishListService {
         return getProductDetails(wishListItem.getProductId());
     }
 
-    public Optional<Long> deleteByClientIdAndProductId(long clientId, String productId) {
-        return wishListItemRepository.deleteByClientIdAndProductId(clientId, productId);
+    public void deleteByClientIdAndProductId(long clientId, String productId) {
+        wishListItemRepository.deleteByClientIdAndProductId(clientId, productId);
     }
-
 }

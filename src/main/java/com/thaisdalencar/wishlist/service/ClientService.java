@@ -39,9 +39,8 @@ public class ClientService {
                 .orElseThrow(() -> new NotFoundException(String.format("Not found clientId: %d", id)));
     }
 
-    public Long deleteById(long id) {
-        return clientRepository.deleteById(id)
-                .orElseThrow(() -> new NotFoundException(String.format("Not found clientId: %d", id)));
+    public void deleteById(long id) {
+        clientRepository.deleteById(id);
     }
 
     public Client updateById(Client client, long id) {
