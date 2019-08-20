@@ -19,12 +19,8 @@ spring:
     platform: postgres
     driverClassName: org.postgresql.Driver
 
-security:
-  oauth2:
-    client:
-      scope: password
-      id: user
-      secret: 123
+jwt:
+  secret: javainuse
 
 clients:
   products:
