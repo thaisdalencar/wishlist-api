@@ -16,16 +16,22 @@ public abstract class BaseEntity {
     private long id;
 
     @CreatedDate
-//    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSS")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdAt;
 
     @LastModifiedDate
-//    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm:ss.SSS")
     @Temporal(TemporalType.TIMESTAMP)
     private Date modifiedAt;
 
     public long getId() {
         return id;
+    }
+
+    public Date getCreatedAt() {
+        return createdAt;
+    }
+
+    public Date getModifiedAt() {
+        return modifiedAt;
     }
 }

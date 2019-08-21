@@ -57,7 +57,6 @@ public class ClientService {
     public Client updateById(Client client, long id) {
         var savedClient = findById(id);
         savedClient.setName(client.getName());
-        savedClient.setEmail(client.getEmail()); //todo: ajeitar o problema da constraint
-        return clientRepository.save(client);
+        return clientRepository.save(savedClient);
     }
 }
