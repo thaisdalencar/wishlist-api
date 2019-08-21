@@ -1,0 +1,31 @@
+
+server:
+  port: ${SERVER_PORT:8080}
+
+spring:
+  profiles:
+    active: ${ACTIVE_PROFILE:dev}
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+    database: POSTGRESQL
+    hibernate:
+      ddl-auto: none
+      batch_size: 25
+  datasource:
+    platform: postgres
+    driverClassName: org.postgresql.Driver
+
+jwt:
+  secret: secret
+
+access:
+  user: admin
+  password: admin
+
+clients:
+  products:
+    url: http://challenge-api.luizalabs.com

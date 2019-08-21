@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+
+  postgres:
+    image: postgres:11-alpine
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: 4nRuZR4sRNlXi7v5LhrlNG9IW5c2IA2L1u5CUY
+      POSTGRES_USER: wishlist
+      POSTGRES_DB: wishlist
+
+  postgres-test:
+    image: postgres:11-alpine
+    restart: unless-stopped
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_PASSWORD: wishlist_test
+      POSTGRES_USER: wishlist
+      POSTGRES_DB: wishlist_test
+
+  test:
+    image: maven:3-jdk-11
+    working_dir: /usr/src/app
+    volumes:
+      - .:/usr/src/app
+      - /opt/resources/settings.xml:/usr/share/maven/ref/settings.xml
+    depends_on:
+      - postgres-test
+    command: "mvn test -Dspring.profiles.active=test"
