@@ -1,4 +1,4 @@
-package com.thaisdalencar.wishlist.config;
+package com.thaisdalencar.wishlist.security;
 
 import org.springframework.boot.autoconfigure.flyway.FlywayMigrationStrategy;
 import org.springframework.context.annotation.Bean;

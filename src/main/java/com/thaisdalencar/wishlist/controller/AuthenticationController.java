@@ -1,8 +1,8 @@
 package com.thaisdalencar.wishlist.controller;
 
 
-import com.thaisdalencar.wishlist.config.JwtTokenUtil;
-import com.thaisdalencar.wishlist.config.WebSecurityConfig;
+import com.thaisdalencar.wishlist.security.jwt.JwtTokenUtil;
+import com.thaisdalencar.wishlist.security.WebSecurityConfig;
 import com.thaisdalencar.wishlist.controller.request.JwtRequest;
 import com.thaisdalencar.wishlist.controller.response.JwtResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class AuthenticationController {
     private WebSecurityConfig webSecurityConfig;
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public JwtResponse createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+    public JwtResponse createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) {
         if (webSecurityConfig.validateUser(authenticationRequest)) {
             return new JwtResponse(jwtTokenUtil.generateToken(authenticationRequest));
         }

@@ -1,4 +1,4 @@
-package com.thaisdalencar.wishlist.service;
+package com.thaisdalencar.wishlist.exception;
 
 import org.springframework.http.HttpStatus;
 

@@ -1,6 +1,8 @@
-package com.thaisdalencar.wishlist.config;
+package com.thaisdalencar.wishlist.security;
 
 import com.thaisdalencar.wishlist.controller.request.JwtRequest;
+import com.thaisdalencar.wishlist.security.jwt.JwtAuthenticationEntryPoint;
+import com.thaisdalencar.wishlist.security.jwt.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;

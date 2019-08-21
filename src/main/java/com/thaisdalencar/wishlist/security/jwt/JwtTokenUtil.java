@@ -1,6 +1,7 @@
-package com.thaisdalencar.wishlist.config;
+package com.thaisdalencar.wishlist.security.jwt;
 
 import com.thaisdalencar.wishlist.controller.request.JwtRequest;
+import com.thaisdalencar.wishlist.security.UserLogin;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

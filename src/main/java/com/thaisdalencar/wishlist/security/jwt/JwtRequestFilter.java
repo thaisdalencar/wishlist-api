@@ -1,5 +1,6 @@
-package com.thaisdalencar.wishlist.config;
+package com.thaisdalencar.wishlist.security.jwt;
 
+import com.thaisdalencar.wishlist.security.UserLogin;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

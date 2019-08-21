@@ -1,8 +1,7 @@
-package com.thaisdalencar.wishlist.config;
+package com.thaisdalencar.wishlist.security;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Collection;
