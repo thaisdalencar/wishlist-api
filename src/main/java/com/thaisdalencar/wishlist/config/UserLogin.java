@@ -7,11 +7,10 @@ import org.springframework.stereotype.Component;
 import java.util.Arrays;
 import java.util.Collection;
 
-@Component
 public class UserLogin implements UserDetails {
 
-    private String user = "admin";
-    private String password = "admin";
+    private String user;
+    private String password;
 
     public UserLogin() {
     }

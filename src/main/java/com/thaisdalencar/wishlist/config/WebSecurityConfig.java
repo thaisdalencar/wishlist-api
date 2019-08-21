@@ -2,6 +2,7 @@ package com.thaisdalencar.wishlist.config;
 
 import com.thaisdalencar.wishlist.controller.request.JwtRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,6 +32,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtRequestFilter jwtRequestFilter;
 
+    @Value("${access.user}")
+    private String user;
+
+    @Value("${access.password}")
+    private String password;
+
     @Bean
     public UserDetailsService userDetailsService() {
         return super.userDetailsService();
@@ -38,9 +45,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-// configure AuthenticationManager so that it knows from where to load
-// user for matching credentials
-// Use BCryptPasswordEncoder
         auth.userDetailsService(jwtUserDetailsService).passwordEncoder(passwordEncoder());
     }
 
@@ -57,22 +61,16 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-// We don't need CSRF for this example
         httpSecurity.csrf().disable()
-// dont authenticate this particular request
                 .authorizeRequests().antMatchers("/authenticate").permitAll().
-// all other requests need to be authenticated
         anyRequest().authenticated().and().
-// make sure we use stateless session; session won't be used to
-// store user's state.
         exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-// Add a filter to validate the tokens with every request
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     public boolean validateUser(JwtRequest userRequest) {
-        var userLogin = new UserLogin();
+        var userLogin = new UserLogin(user, password);
         return userRequest.getUsername().equals(userLogin.getUsername())
                 && userRequest.getPassword().equals(userLogin.getPassword());
     }
