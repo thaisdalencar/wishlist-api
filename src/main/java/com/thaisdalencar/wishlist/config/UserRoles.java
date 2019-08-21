@@ -1,4 +1,4 @@
-package com.thaisdalencar.wishlist.entity;
+package com.thaisdalencar.wishlist.config;
 
 import org.springframework.security.core.GrantedAuthority;
 

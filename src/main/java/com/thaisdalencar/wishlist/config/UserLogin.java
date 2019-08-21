@@ -1,24 +1,37 @@
-package com.thaisdalencar.wishlist.entity;
+package com.thaisdalencar.wishlist.config;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Collection;
 
+@Component
 public class UserLogin implements UserDetails {
+
+    private String user = "admin";
+    private String password = "admin";
+
+    public UserLogin() {
+    }
+
+    public UserLogin(String user, String password) {
+        this.user = user;
+        this.password = password;
+    }
 
     public Collection<? extends GrantedAuthority> getAuthorities() {
         var userRole = new UserRoles();
         return Arrays.asList(userRole);
     }
 
-    public String getPassword() {
-        return "abc";
+    public String getUsername(){
+        return this.user;
     };
 
-    public String getUsername(){
-        return "abc";
+    public String getPassword() {
+        return this.password;
     };
 
     public boolean isAccountNonExpired() {

@@ -1,5 +1,6 @@
 package com.thaisdalencar.wishlist.config;
 
+import com.thaisdalencar.wishlist.controller.request.JwtRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -68,5 +69,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 // Add a filter to validate the tokens with every request
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
+    }
+
+    public boolean validateUser(JwtRequest userRequest) {
+        var userLogin = new UserLogin();
+        return userRequest.getUsername().equals(userLogin.getUsername())
+                && userRequest.getPassword().equals(userLogin.getPassword());
     }
 }
