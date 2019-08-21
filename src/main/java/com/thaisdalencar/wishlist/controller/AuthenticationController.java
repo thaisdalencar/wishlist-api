@@ -31,7 +31,7 @@ public class AuthenticationController {
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public JwtResponse createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
         if (webSecurityConfig.validateUser(authenticationRequest)) {
-            return new JwtResponse(jwtTokenUtil.generateToken(new UserLogin()));
+            return new JwtResponse(jwtTokenUtil.generateToken(authenticationRequest));
         }
 
         throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);

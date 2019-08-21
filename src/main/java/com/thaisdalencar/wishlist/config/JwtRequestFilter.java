@@ -3,6 +3,7 @@ package com.thaisdalencar.wishlist.config;
 import com.thaisdalencar.wishlist.service.JwtUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,6 +26,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
+    @Value("${access.user}")
+    private String user;
+
+    @Value("${access.password}")
+    private String password;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         final String requestTokenHeader = request.getHeader("Authorization");
@@ -46,7 +53,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         }
 // Once we get the token validate it.
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
+            UserDetails userDetails = new UserLogin(user, password);
 // if token is valid configure Spring Security to manually set
 // authentication
             if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {

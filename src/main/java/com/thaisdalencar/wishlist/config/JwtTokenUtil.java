@@ -1,5 +1,6 @@
 package com.thaisdalencar.wishlist.config;
 
+import com.thaisdalencar.wishlist.controller.request.JwtRequest;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -45,7 +46,8 @@ public class JwtTokenUtil implements Serializable {
         return expiration.before(new Date());
     }
     //generate token for user
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(JwtRequest userRequest) {
+        var userDetails = new UserLogin(userRequest.getUsername(), userRequest.getPassword());
         Map<String, Object> claims = new HashMap<>();
         return doGenerateToken(claims, userDetails.getUsername());
     }

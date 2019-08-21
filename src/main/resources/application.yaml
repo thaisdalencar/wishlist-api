@@ -20,7 +20,11 @@ spring:
     driverClassName: org.postgresql.Driver
 
 jwt:
-  secret: javainuse
+  secret: secret
+
+access:
+  user: admin
+  password: admin
 
 clients:
   products:
