@@ -31,3 +31,4 @@ services:
     depends_on:
       - postgres-test
     command: "mvn test -Dspring.profiles.active=test"
+
