@@ -20,9 +20,13 @@ A `Wish List Api` trata-se de um serviço responsável por gerenciar os produtos
 #### Considerações e decisões técnicas
  
  - Foi dada uma [`api de produtos`](https://gist.github.com/Bgouveia/9e043a3eba439489a35e70d1b5ea08ec) que fornece suas descrições, diante disso foi, optado por não realizar o armazenamento redundante das informações dos produtos na base da wishlist, evitando ter informações desatualizadas sobre os produtos, principalmente devido ao fato da wishlist api informar, dentre outras coisas, o preço dos produtos, uma informação volátil, e evitando também o armazenamento desnecessário de dados, visto que cada cliente pode ter uma lista infinita de produtos favoritos.
+ 
  - Uma oportunidade de melhoria seria realizar consultas [`api de produtos`](https://gist.github.com/Bgouveia/9e043a3eba439489a35e70d1b5ea08ec) pelas informações de uma dada lista de productsId(endpoint não foi fornecido), dessa forma poderia ser realizada apenas uma ou poucas requisições à api de produtos para buscar as informações dos produtos da lista de uma cliente.
+ 
  - Como a lista de clientes e seus produtos favoritos pode ter tamanho infinito, optou-se retornar a lista paginada, cada página contendo 20 items por default, mas esse tamanho pode ser alterado na request.  
+ 
  - Considerou-se que a `wishlist api` é uma serviço de base para outros, ou seja, que um Backend for Frontend (BFF) ou serviço que interage diretamente com os clientes e/ou o com o setor no Marketing é responsável por repassa o token valido e requisitar os endpoints da wishlist baseado no perfil que esteja solicitando.
+ 
  - Uma oportunidade de melhoria seria uma seviço unico para autenticação, que gerasse um token válido a partir de um user e password e retornasse um token que poderia ser utilizado por vários serviço. Na `wishlist api` foi implementada uma validação simples de login que retorna um token para ser utilizados nas requisições, mas devido ao fato de não haver um outro serviço para isso, pois acreditasse que dependendo do escopo não é interessante cada produto implementar sua própria autenticação e autorização.
  
 ### Tecnologias
