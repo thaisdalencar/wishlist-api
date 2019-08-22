@@ -9,7 +9,7 @@ import javax.validation.constraints.Pattern;
 import java.util.List;
 
 @Entity
-public class Client extends BaseEntity {
+public class Customer extends BaseEntity {
 
     @NotEmpty(message = "Name not be empty")
     private String name;
@@ -17,13 +17,13 @@ public class Client extends BaseEntity {
     @Pattern(regexp=".+@.+\\..+", message="Email should be valid")
     private String email;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "client", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "customer", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<WishListItem> wishList;
 
-    public Client() {
+    public Customer() {
     }
 
-    public Client(@NotEmpty(message = "Name not be empty") String name, @Pattern(regexp = ".+@.+\\..+", message = "Email should be valid") String email) {
+    public Customer(@NotEmpty(message = "Name not be empty") String name, @Pattern(regexp = ".+@.+\\..+", message = "Email should be valid") String email) {
         this.name = name;
         this.email = email;
     }

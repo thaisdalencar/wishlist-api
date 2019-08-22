@@ -13,13 +13,13 @@ import java.util.Optional;
 @Repository
 public interface WishListItemRepository extends PagingAndSortingRepository<WishListItem, Long> {
 
-    @EntityGraph(attributePaths = { "client" })
-    Optional<WishListItem> findByClientIdAndProductId(long clientId, String productId);
+    @EntityGraph(attributePaths = { "customer" })
+    Optional<WishListItem> findByCustomerIdAndProductId(long customerId, String productId);
 
-    @EntityGraph(attributePaths = { "client" })
-    Page<WishListItem> findByClientId(long clientId, Pageable pageable);
+    @EntityGraph(attributePaths = { "customer" })
+    Page<WishListItem> findByCustomerId(long customerId, Pageable pageable);
 
     @Transactional
-    @EntityGraph(attributePaths = { "client" })
-    Long deleteByClientIdAndProductId(long clientId, String productId);
+    @EntityGraph(attributePaths = { "customer" })
+    Long deleteByCustomerIdAndProductId(long customerId, String productId);
 }

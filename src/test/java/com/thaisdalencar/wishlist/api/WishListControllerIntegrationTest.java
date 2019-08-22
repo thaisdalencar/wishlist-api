@@ -2,9 +2,9 @@ package com.thaisdalencar.wishlist.api;
 
 import com.thaisdalencar.wishlist.client.Product;
 import com.thaisdalencar.wishlist.client.ProductApiClient;
-import com.thaisdalencar.wishlist.entity.Client;
+import com.thaisdalencar.wishlist.entity.Customer;
 import com.thaisdalencar.wishlist.entity.WishListItem;
-import com.thaisdalencar.wishlist.repository.ClientRepository;
+import com.thaisdalencar.wishlist.repository.CustomerRepository;
 import com.thaisdalencar.wishlist.repository.WishListItemRepository;
 import org.junit.After;
 import org.junit.Test;
@@ -34,7 +34,7 @@ public class WishListControllerIntegrationTest {
     private MockMvc mvc;
 
     @Autowired
-    private ClientRepository clientRepository;
+    private CustomerRepository customerRepository;
 
     @Autowired
     private WishListItemRepository wishListItemRepository;
@@ -44,7 +44,7 @@ public class WishListControllerIntegrationTest {
 
     @After
     public void tearDown() {
-        clientRepository.deleteAll();
+        customerRepository.deleteAll();
     }
 
     @Test
@@ -54,7 +54,7 @@ public class WishListControllerIntegrationTest {
         saveClientWishList(client, productId);
         var product = mockProductApi(productId);
 
-        mvc.perform(get(String.format("/api/v1/clients/%d/favorite-products", client.getId())))
+        mvc.perform(get(String.format("/api/v1/customers/%d/favorite-products", client.getId())))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.content", hasSize(2)))
@@ -65,16 +65,16 @@ public class WishListControllerIntegrationTest {
                 .andExpect(jsonPath("$.content[0].reviewScore").doesNotExist());
     }
 
-    private Client saveMockClient() {
-        var client = new Client("User A", "usera@email.com");
-        return clientRepository.save(client);
+    private Customer saveMockClient() {
+        var client = new Customer("User A", "usera@email.com");
+        return customerRepository.save(client);
     }
 
-    private void saveClientWishList(Client client, String productId) {
-        var wishListItem = new WishListItem(client, productId);
+    private void saveClientWishList(Customer customer, String productId) {
+        var wishListItem = new WishListItem(customer, productId);
         wishListItemRepository.save(wishListItem);
 
-        var wishListItemA = new WishListItem(client, "de2911eb-ce5c-e783-1ca5-82d0ccd4e3d8");
+        var wishListItemA = new WishListItem(customer, "de2911eb-ce5c-e783-1ca5-82d0ccd4e3d8");
         wishListItemRepository.save(wishListItemA);
     }
 
@@ -91,7 +91,7 @@ public class WishListControllerIntegrationTest {
         var productId = "2b505fab-d865-e164-345d-efbd4c2045b6";
         saveClientWishList(client, productId);
         var product = mockProductApi(productId);
-        mvc.perform(get(String.format("/api/v1/clients/%d/favorite-products/%s", client.getId(), productId)))
+        mvc.perform(get(String.format("/api/v1/customers/%d/favorite-products/%s", client.getId(), productId)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.id", is(product.getId())))
@@ -106,13 +106,13 @@ public class WishListControllerIntegrationTest {
         var client = saveMockClient();
         var productId = "2b505fab-d865-e164-345d-efbd4c2045b6";
         saveClientWishList(client, productId);
-        mvc.perform(delete(String.format("/api/v1/clients/%d/favorite-products/%s", client.getId(), productId)))
+        mvc.perform(delete(String.format("/api/v1/customers/%d/favorite-products/%s", client.getId(), productId)))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void given_request_for_delete_client_when_not_exist_then_return_not_found() throws Exception {
-        mvc.perform(delete(String.format("/api/v1/clients/100/favorite-products/abc-edf")))
+        mvc.perform(delete(String.format("/api/v1/customers/100/favorite-products/abc-edf")))
                 .andExpect(status().is4xxClientError());
     }
 }
