@@ -68,14 +68,4 @@ JSON Request:
 	"password": "admin"
 }
 ```
-
-### Add Client
-
-```
-http://localhost:8080/update?name=Kyoto
-```
-
-JSON Response:
-
-```json
-[{"id":1,"name":"Kyoto"},{"id":2,"name":"New York"},{"id":3,"name":"London"}]
+"Kyoto"},{"id":2,"name":"New York"},{"id":3,"name":"London"}]
