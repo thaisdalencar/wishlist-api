@@ -1,7 +1,7 @@
 package com.thaisdalencar.wishlist.api;
 
-import com.thaisdalencar.wishlist.entity.Client;
-import com.thaisdalencar.wishlist.repository.ClientRepository;
+import com.thaisdalencar.wishlist.entity.Customer;
+import com.thaisdalencar.wishlist.repository.CustomerRepository;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -23,23 +23,23 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class ClientControllerIntegrationTest {
+public class CustomerControllerIntegrationTest {
 
     @Autowired
     private MockMvc mvc;
 
     @Autowired
-    private ClientRepository clientRepository;
+    private CustomerRepository customerRepository;
 
     @After
     public void tearDown() {
-        clientRepository.deleteAll();
+        customerRepository.deleteAll();
     }
 
     @Test
-    public void given_request_by_clients_then_returns_all() throws Exception {
-        saveMockClients();
-        mvc.perform(get("/api/v1/clients"))
+    public void given_request_by_customers_then_returns_all() throws Exception {
+        saveMockCustomers();
+        mvc.perform(get("/api/v1/customers"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.content", hasSize(2)))
@@ -47,18 +47,18 @@ public class ClientControllerIntegrationTest {
                 .andExpect(jsonPath("$.content[0].email", is("usera@email.com")));
     }
 
-    private void saveMockClients() {
-        var clientA = new Client("User A", "usera@email.com");
-        var clientB = new Client("User B", "userb@email.com");
-        clientRepository.saveAll(List.of(clientA, clientB));
+    private void saveMockCustomers() {
+        var clientA = new Customer("User A", "usera@email.com");
+        var clientB = new Customer("User B", "userb@email.com");
+        customerRepository.saveAll(List.of(clientA, clientB));
     }
 
     @Test
     public void given_request_by_specific_client_then_return_info_about_him() throws Exception {
-        saveMockClients();
-        var clients = clientRepository.findAll();
-        var client = clients.iterator().next();
-        mvc.perform(get(String.format("/api/v1/clients/%d", client.getId())))
+        saveMockCustomers();
+        var customers = customerRepository.findAll();
+        var client = customers.iterator().next();
+        mvc.perform(get(String.format("/api/v1/customers/%d", client.getId())))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.name", is(client.getName())))
@@ -67,16 +67,16 @@ public class ClientControllerIntegrationTest {
 
     @Test
     public void given_request_for_delete_client_when_exist_then_return_ok() throws Exception {
-        saveMockClients();
-        var clients = clientRepository.findAll();
-        var client = clients.iterator().next();
-        mvc.perform(delete(String.format("/api/v1/clients/%d", client.getId())))
+        saveMockCustomers();
+        var customers = customerRepository.findAll();
+        var client = customers.iterator().next();
+        mvc.perform(delete(String.format("/api/v1/customers/%d", client.getId())))
                 .andExpect(status().isOk());
     }
 
     @Test
     public void given_request_for_delete_client_when_not_exist_then_return_not_found() throws Exception {
-        mvc.perform(delete(String.format("/api/v1/clients/100")))
+        mvc.perform(delete(String.format("/api/v1/customers/100")))
                 .andExpect(status().is4xxClientError());
     }
 }

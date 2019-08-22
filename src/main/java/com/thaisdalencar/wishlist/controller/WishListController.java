@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
-@RequestMapping("/api/v1/clients/{clientId}/favorite-products")
+@RequestMapping("/api/v1/customers/{customerId}/wish-list")
 public class WishListController {
 
     private final WishListService wishListService;
@@ -22,22 +22,22 @@ public class WishListController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public WishListItem save(@PathVariable("clientId") long clientId, @RequestBody FavoriteProductRequest favoriteProductRequest) {
-        return wishListService.save(clientId, favoriteProductRequest);
+    public WishListItem save(@PathVariable("customerId") long customerId, @RequestBody FavoriteProductRequest favoriteProductRequest) {
+        return wishListService.save(customerId, favoriteProductRequest);
     }
 
     @GetMapping
-    public Page<Product> get(@PathVariable("clientId") long clientId, PaginationRequest page) {
-        return wishListService.findByClientId(clientId, page);
+    public Page<Product> get(@PathVariable("customerId") long customerId, PaginationRequest page) {
+        return wishListService.findByCustomerId(customerId, page);
     }
 
     @GetMapping("/{productId}")
-    public Product getItem(@PathVariable("clientId") long clientId, @PathVariable("productId") String productId) {
-        return wishListService.findByClientIdAndProductId(clientId, productId);
+    public Product getItem(@PathVariable("customerId") long customerId, @PathVariable("productId") String productId) {
+        return wishListService.findByCustomerIdAndProductId(customerId, productId);
     }
 
     @DeleteMapping("/{productId}")
-    public void delete(@PathVariable("clientId") long clientId, @PathVariable("productId") String productId) {
-        wishListService.deleteByClientIdAndProductId(clientId, productId);
+    public void delete(@PathVariable("customerId") long customerId, @PathVariable("productId") String productId) {
+        wishListService.deleteByCustomerIdAndProductId(customerId, productId);
     }
 }

@@ -1,7 +1,7 @@
 
 spring:
   datasource:
-    url: ${DB_URL_PROD:jdbc:postgresql://localhost:5432/wishlist}
+    url: ${DB_URL_PROD:jdbc:postgresql://postgres:5432/wishlist}
     username: ${DB_USER_PROD:wishlist}
     password: ${DB_PSW_PROD:4nRuZR4sRNlXi7v5LhrlNG9IW5c2IA2L1u5CUY}
 

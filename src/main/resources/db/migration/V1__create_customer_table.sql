@@ -1,4 +1,4 @@
-CREATE TABLE client
+CREATE TABLE customer
 (
     id SERIAL PRIMARY KEY,
     created_at timestamp with time zone NOT NULL,
