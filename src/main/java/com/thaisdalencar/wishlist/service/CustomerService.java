@@ -57,6 +57,7 @@ public class CustomerService {
     public Customer updateById(Customer customer, long id) {
         var savedCustomer = findById(id);
         savedCustomer.setName(customer.getName());
+        savedCustomer.setEmail(customer.getEmail());
         return customerRepository.save(savedCustomer);
     }
 }
