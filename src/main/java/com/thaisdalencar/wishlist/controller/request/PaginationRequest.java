@@ -7,7 +7,7 @@ import org.springframework.data.domain.Pageable;
 public class PaginationRequest {
 
     private Integer page = 0;
-    private Integer size = 10;
+    private Integer size = 20;
 
     public PaginationRequest() {
     }

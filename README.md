@@ -20,14 +20,10 @@ A `Wish List Api` trata-se de um serviço resposável por gerenciar os produtos 
 Considerações e decisões de implementações:
  
  - Foi dada uma [`api de produtos`](https://gist.github.com/Bgouveia/9e043a3eba439489a35e70d1b5ea08ec) 
- que fornece suas descrições, diante disso foi optado por não realizar o armazenamento redundante na base da 
- wishlist das informações dos produtos, evitando ter informações desatualizadas sobre os produtos, principalmente devido 
- ao fato da wishlist api informar, dentre outras coisas, o preço dos produtos, uma informação volátil, e evitando também o armazenamento desnecessário de dados,
- visto que cada cliente pode ter uma lista infinita de produtos favoritos.
-
-- Uma oportunidade de melhoria seria realizar consultas [`api de produtos`](https://gist.github.com/Bgouveia/9e043a3eba439489a35e70d1b5ea08ec) pelas informações de uma dada lista de productsId,
-dessa forma seria realizada apenas uma, ou poucas, requisição na api de produtos para buscar as informações dos produtos da lista de uma cliente.
-
+ que fornece suas descrições, diante disso foi optado por não realizar o armazenamento redundante na base da wishlist das informações dos produtos, evitando ter informações desatualizadas sobre os produtos, principalmente devido ao fato da wishlist api informar, dentre outras coisas, o preço dos produtos, uma informação volátil, e evitando também o armazenamento desnecessário de dados, visto que cada cliente pode ter uma lista infinita de produtos favoritos.
+ - Uma oportunidade de melhoria seria realizar consultas [`api de produtos`](https://gist.github.com/Bgouveia/9e043a3eba439489a35e70d1b5ea08ec) pelas informações de uma dada lista de productsId(endpoint não foi fornecido), dessa forma poderia ser realizada apenas uma ou poucas requisições à api de produtos para buscar as informações dos produtos da lista de uma cliente.
+ - Como a lista de clientes e seus produtos favoritos pode ter quantidade infinita, optou-se retornar a lista paginada, cada página contendo 20 items por default, mas esse tamanho pode ser alterado na request.  
+ 
  
  
 ## Tecnologias
