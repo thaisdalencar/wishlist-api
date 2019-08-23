@@ -90,12 +90,12 @@ POST http://{address}:8080/api/v1/customers
 * Atualizar
 ```
 PUT http://{address}:8080/api/v1/customers/<CUSTOMER_ID>
-
+```
 <CUSTOMER_ID> representa o número do id do cliente para ser editado
 
 Body Request:
 
-```json
+```
 {
 	"name": "name",
 	"email": "email@abc.com"
@@ -106,23 +106,21 @@ Body Request:
 
 ```
 DELETE http://{address}:8080/api/v1/customers/<CUSTOMER_ID>
-
+```
 <CUSTOMER_ID> representa o número do id do cliente para ser deletado
 
-```
 
 * Visualizar
 
 ```
 GET http://{address}:8080/api/v1/customers/<CUSTOMER_ID>
-
+```
 <CUSTOMER_ID> representa o número do id do cliente para ser ver
-
+```
 GET http://{address}:8080/api/v1/customers/?page=<PAGINA>
-
+```
 <PAGINA> representa o número da página requisitada
 
-```
 
 
 
