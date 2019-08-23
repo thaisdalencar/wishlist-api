@@ -2,10 +2,13 @@ package com.thaisdalencar.wishlist.api;
 
 import com.thaisdalencar.wishlist.client.Product;
 import com.thaisdalencar.wishlist.client.ProductApiClient;
+import com.thaisdalencar.wishlist.controller.request.JwtRequest;
+import com.thaisdalencar.wishlist.controller.response.JwtResponse;
 import com.thaisdalencar.wishlist.entity.Customer;
 import com.thaisdalencar.wishlist.entity.WishListItem;
 import com.thaisdalencar.wishlist.repository.CustomerRepository;
 import com.thaisdalencar.wishlist.repository.WishListItemRepository;
+import com.thaisdalencar.wishlist.security.jwt.JwtTokenUtil;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,19 +45,23 @@ public class WishListControllerIntegrationTest {
     @MockBean
     private ProductApiClient productApiClient;
 
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
+
     @After
     public void tearDown() {
         customerRepository.deleteAll();
     }
 
     @Test
-    public void given_request_by_client_wish_list_then_return() throws Exception {
+    public void given_request_by_customer_wish_list_then_return() throws Exception {
         var client = saveMockClient();
         var productId = "ddeb989e-53c4-e68b-aa93-6e43afddb797";
         saveClientWishList(client, productId);
         var product = mockProductApi(productId);
-
-        mvc.perform(get(String.format("/api/v1/customers/%d/favorite-products", client.getId())))
+        var auth = mockAuthentication();
+        mvc.perform(get(String.format("/api/v1/customers/%d/wish-list", client.getId()))
+                .header("Authorization", "Bearer " + auth.getToken()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.content", hasSize(2)))
@@ -86,12 +93,14 @@ public class WishListControllerIntegrationTest {
     }
 
     @Test
-    public void given_request_by_specific_client_wish_list_then_return() throws Exception {
+    public void given_request_by_specific_customer_wish_list_then_return() throws Exception {
         var client = saveMockClient();
         var productId = "2b505fab-d865-e164-345d-efbd4c2045b6";
         saveClientWishList(client, productId);
         var product = mockProductApi(productId);
-        mvc.perform(get(String.format("/api/v1/customers/%d/favorite-products/%s", client.getId(), productId)))
+        var auth = mockAuthentication();
+        mvc.perform(get(String.format("/api/v1/customers/%d/wish-list/%s", client.getId(), productId))
+                .header("Authorization", "Bearer " + auth.getToken()))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(jsonPath("$.id", is(product.getId())))
@@ -102,17 +111,26 @@ public class WishListControllerIntegrationTest {
     }
 
     @Test
-    public void given_request_for_delete_client_when_exist_then_return_ok() throws Exception {
+    public void given_request_for_delete_customer_when_exist_then_return_ok() throws Exception {
         var client = saveMockClient();
         var productId = "2b505fab-d865-e164-345d-efbd4c2045b6";
         saveClientWishList(client, productId);
-        mvc.perform(delete(String.format("/api/v1/customers/%d/favorite-products/%s", client.getId(), productId)))
+        var auth = mockAuthentication();
+        mvc.perform(delete(String.format("/api/v1/customers/%d/wish-list/%s", client.getId(), productId))
+                .header("Authorization", "Bearer " + auth.getToken()))
                 .andExpect(status().isOk());
     }
 
     @Test
-    public void given_request_for_delete_client_when_not_exist_then_return_not_found() throws Exception {
-        mvc.perform(delete(String.format("/api/v1/customers/100/favorite-products/abc-edf")))
+    public void given_request_for_delete_customer_when_not_exist_then_return_not_found() throws Exception {
+        var auth = mockAuthentication();
+        mvc.perform(delete(String.format("/api/v1/customers/100/wish-list/abc-edf"))
+                .header("Authorization", "Bearer " + auth.getToken()))
                 .andExpect(status().is4xxClientError());
+    }
+
+    private JwtResponse mockAuthentication() {
+        var login = new JwtRequest("admin", "admin");
+        return new JwtResponse(jwtTokenUtil.generateToken(login));
     }
 }
