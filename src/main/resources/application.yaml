@@ -4,7 +4,7 @@ server:
 
 spring:
   profiles:
-    active: ${ACTIVE_PROFILE:test}
+    active: ${ACTIVE_PROFILE:dev}
   jpa:
     properties:
       hibernate:
@@ -20,7 +20,7 @@ spring:
     driverClassName: org.postgresql.Driver
 
 jwt:
-  secret: secret
+  secret: 4nRuZR4sRNlXi7v5LhrlNG9IW5c2IA2L1u5CUY
 
 access:
   user: admin

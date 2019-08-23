@@ -3,4 +3,4 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/wishlist_test
     username: wishlist
-    password: wishlist_test
+    password: 4nRuZR4sRNlXi7v5LhrlNG9IW5c2IA2L1u5CUY
