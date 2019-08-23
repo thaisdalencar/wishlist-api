@@ -73,21 +73,21 @@ POST http://{address}:8080/authenticate
 }
 ```
 
-### Customers
+### Clientes
 
-* Adicionar
+#### Adicionar
 ```
 POST http://{address}:8080/api/v1/customers
-
- Body Request:
-```json
+```
+Body Request:
+```
 {
 	"name": "name",
 	"email": "email@abc.com"
 }
 ```
 
-* Atualizar
+#### Atualizar
 ```
 PUT http://{address}:8080/api/v1/customers/<CUSTOMER_ID>
 ```
@@ -102,7 +102,7 @@ Body Request:
 }
 ```
 
-* Deletar
+#### Deletar
 
 ```
 DELETE http://{address}:8080/api/v1/customers/<CUSTOMER_ID>
@@ -110,7 +110,7 @@ DELETE http://{address}:8080/api/v1/customers/<CUSTOMER_ID>
 <CUSTOMER_ID> representa o número do id do cliente para ser deletado
 
 
-* Visualizar
+#### Visualizar
 
 ```
 GET http://{address}:8080/api/v1/customers/<CUSTOMER_ID>
@@ -121,6 +121,42 @@ GET http://{address}:8080/api/v1/customers/?page=<PAGINA>
 ```
 <PAGINA> representa o número da página requisitada
 
+### Produtos favoritos
+
+#### Adicionar
+```
+POST http://{address}:8080/api/v1/customers/<CUSTOMER_ID>/wish-list
+```
+<CUSTOMER_ID> representa o número do id do cliente 
+
+Body Request:
+```
+{
+	"productId": "XXXXXX"
+}
+```
+
+#### Deletar
+
+```
+DELETE http://{address}:8080/api/v1/customers/<CUSTOMER_ID>/wish-list/<PRODUCT_ID>
+```
+<CUSTOMER_ID> representa o número do id do cliente 
+<PRODUCT_ID> representa o número do id do produto 
+
+
+#### Visualizar
+
+```
+GET http://{address}:8080/api/v1/customers/<CUSTOMER_ID>/wish-list/<PRODUCT_ID>
+```
+<CUSTOMER_ID> representa o número do id do cliente 
+<PRODUCT_ID> representa o número do id do produto 
+```
+GET http://{address}:8080/api/v1/customers/wish-list?page=<PAGINA>
+```
+<CUSTOMER_ID> representa o número do id do cliente 
+<PAGINA> representa o número da página requisitada
 
 
 
