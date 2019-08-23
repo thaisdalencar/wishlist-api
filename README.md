@@ -144,7 +144,7 @@ Body Request:
 DELETE http://{address}:8080/api/v1/customers/<CUSTOMER_ID>/wish-list/<PRODUCT_ID>
 ```
 * `<CUSTOMER_ID>` representa o número do id do cliente 
-* <PRODUCT_ID> representa o número do id do produto 
+* `<PRODUCT_ID>` representa o número do id do produto 
 
 
 #### Visualizar
@@ -153,7 +153,7 @@ DELETE http://{address}:8080/api/v1/customers/<CUSTOMER_ID>/wish-list/<PRODUCT_I
 GET http://{address}:8080/api/v1/customers/<CUSTOMER_ID>/wish-list/<PRODUCT_ID>
 ```
 * `<CUSTOMER_ID>` representa o número do id do cliente 
-* <PRODUCT_ID> representa o número do id do produto 
+* `<PRODUCT_ID>` representa o número do id do produto 
 ```
 GET http://{address}:8080/api/v1/customers/wish-list?page=<PAGINA>
 ```
