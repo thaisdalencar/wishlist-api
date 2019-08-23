@@ -2,7 +2,7 @@
 
 ## Sobre o serviço
 
-A `Wish List Api` trata-se de um serviço responsável por gerenciar os produtos favoritos de clientes. 
+A `Wish List Api` trata-se de um serviço responsável por gerenciar produtos favoritos de clientes. 
 
 #### Especificações
  
@@ -27,7 +27,7 @@ A `Wish List Api` trata-se de um serviço responsável por gerenciar os produtos
  
  - Considerou-se que a `wishlist api` é uma serviço de base para outros, ou seja, que um Backend for Frontend (BFF) ou serviço que interage diretamente com os clientes e/ou o com o setor no Marketing é responsável por repassa o token valido e requisitar os endpoints da wishlist baseado no perfil que esteja solicitando.
  
- - Uma oportunidade de melhoria seria uma seviço unico para autenticação, que gerasse um token válido a partir de um user e password e retornasse um token que poderia ser utilizado por vários serviço. Na `wishlist api` foi implementada uma validação simples de login que retorna um token para ser utilizados nas requisições, mas devido ao fato de não haver um outro serviço para isso, pois acreditasse que dependendo do escopo não é interessante cada produto implementar sua própria autenticação e autorização.
+ - Uma oportunidade de melhoria seria uma seviço terceiro único para autenticação, que gerasse um token válido a partir de um user e password e retornasse um token que poderia ser utilizado por vários serviço, estes só validariam o token. Na `wishlist api` foi implementada uma validação simples de login que retorna um token para ser utilizados nas requisições, mas devido ao fato de não haver um outro serviço para isso, pois acreditasse que dependendo do escopo não é interessante cada serviço implementar sua própria autenticação e autorização.
  
 ### Tecnologias
 
