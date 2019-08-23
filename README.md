@@ -47,6 +47,7 @@ A `Wish List Api` trata-se de um serviço responsável por gerenciar os produtos
 
 #### Running
 ```
+make db
 mvn clean compile spring-boot:run
 ```
 
@@ -55,16 +56,16 @@ mvn clean compile spring-boot:run
 mvn test
 ```
 
-## API 
+## Endpoints 
 --------
 
 ### Authentication to get token
 
 ```
-http://localhost:8080/authenticate
+POST http://{address}:8080/authenticate
 ```
 
-JSON Request:
+    Body Request:
 
 ```json
 {
@@ -72,3 +73,91 @@ JSON Request:
 	"password": "admin"
 }
 ```
+
+### Clientes
+
+#### Adicionar
+```
+POST http://{address}:8080/api/v1/customers
+```
+Body Request:
+```
+{
+	"name": "name",
+	"email": "email@abc.com"
+}
+```
+
+#### Atualizar
+```
+PUT http://{address}:8080/api/v1/customers/<CUSTOMER_ID>
+```
+<CUSTOMER_ID> representa o número do id do cliente para ser editado
+
+Body Request:
+
+```
+{
+	"name": "name",
+	"email": "email@abc.com"
+}
+```
+
+#### Deletar
+
+```
+DELETE http://{address}:8080/api/v1/customers/<CUSTOMER_ID>
+```
+<CUSTOMER_ID> representa o número do id do cliente para ser deletado
+
+
+#### Visualizar
+
+```
+GET http://{address}:8080/api/v1/customers/<CUSTOMER_ID>
+```
+<CUSTOMER_ID> representa o número do id do cliente para ser ver
+```
+GET http://{address}:8080/api/v1/customers/?page=<PAGINA>
+```
+<PAGINA> representa o número da página requisitada
+
+### Produtos favoritos
+
+#### Adicionar
+```
+POST http://{address}:8080/api/v1/customers/<CUSTOMER_ID>/wish-list
+```
+<CUSTOMER_ID> representa o número do id do cliente 
+
+Body Request:
+```
+{
+	"productId": "XXXXXX"
+}
+```
+
+#### Deletar
+
+```
+DELETE http://{address}:8080/api/v1/customers/<CUSTOMER_ID>/wish-list/<PRODUCT_ID>
+```
+<CUSTOMER_ID> representa o número do id do cliente 
+<PRODUCT_ID> representa o número do id do produto 
+
+
+#### Visualizar
+
+```
+GET http://{address}:8080/api/v1/customers/<CUSTOMER_ID>/wish-list/<PRODUCT_ID>
+```
+<CUSTOMER_ID> representa o número do id do cliente 
+<PRODUCT_ID> representa o número do id do produto 
+```
+GET http://{address}:8080/api/v1/customers/wish-list?page=<PAGINA>
+```
+<CUSTOMER_ID> representa o número do id do cliente 
+<PAGINA> representa o número da página requisitada
+
+
+
