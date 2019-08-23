@@ -47,6 +47,7 @@ A `Wish List Api` trata-se de um serviço responsável por gerenciar os produtos
 
 #### Running
 ```
+make db
 mvn clean compile spring-boot:run
 ```
 
