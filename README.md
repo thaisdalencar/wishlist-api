@@ -65,9 +65,9 @@ mvn test
 POST http://{address}:8080/authenticate
 ```
 
-    Body Request:
+Body Request:
 
-```json
+```
 {
 	"username": "admin",
 	"password": "admin"
@@ -92,7 +92,7 @@ Body Request:
 ```
 PUT http://{address}:8080/api/v1/customers/<CUSTOMER_ID>
 ```
-<CUSTOMER_ID> representa o número do id do cliente para ser editado
+* <CUSTOMER_ID> representa o número do id do cliente para ser editado
 
 Body Request:
 
@@ -108,7 +108,7 @@ Body Request:
 ```
 DELETE http://{address}:8080/api/v1/customers/<CUSTOMER_ID>
 ```
-<CUSTOMER_ID> representa o número do id do cliente para ser deletado
+* <CUSTOMER_ID> representa o número do id do cliente para ser deletado
 
 
 #### Visualizar
@@ -116,11 +116,12 @@ DELETE http://{address}:8080/api/v1/customers/<CUSTOMER_ID>
 ```
 GET http://{address}:8080/api/v1/customers/<CUSTOMER_ID>
 ```
-<CUSTOMER_ID> representa o número do id do cliente para ser ver
+* <CUSTOMER_ID> representa o número do id do cliente para ser ver
 ```
 GET http://{address}:8080/api/v1/customers/?page=<PAGINA>
 ```
-<PAGINA> representa o número da página requisitada
+* <PAGINA> representa o número da página requisitada
+
 
 ### Produtos favoritos
 
@@ -128,7 +129,7 @@ GET http://{address}:8080/api/v1/customers/?page=<PAGINA>
 ```
 POST http://{address}:8080/api/v1/customers/<CUSTOMER_ID>/wish-list
 ```
-<CUSTOMER_ID> representa o número do id do cliente 
+* <CUSTOMER_ID> representa o número do id do cliente 
 
 Body Request:
 ```
@@ -142,8 +143,8 @@ Body Request:
 ```
 DELETE http://{address}:8080/api/v1/customers/<CUSTOMER_ID>/wish-list/<PRODUCT_ID>
 ```
-<CUSTOMER_ID> representa o número do id do cliente 
-<PRODUCT_ID> representa o número do id do produto 
+* <CUSTOMER_ID> representa o número do id do cliente 
+* <PRODUCT_ID> representa o número do id do produto 
 
 
 #### Visualizar
@@ -151,13 +152,13 @@ DELETE http://{address}:8080/api/v1/customers/<CUSTOMER_ID>/wish-list/<PRODUCT_I
 ```
 GET http://{address}:8080/api/v1/customers/<CUSTOMER_ID>/wish-list/<PRODUCT_ID>
 ```
-<CUSTOMER_ID> representa o número do id do cliente 
-<PRODUCT_ID> representa o número do id do produto 
+* <CUSTOMER_ID> representa o número do id do cliente 
+* <PRODUCT_ID> representa o número do id do produto 
 ```
 GET http://{address}:8080/api/v1/customers/wish-list?page=<PAGINA>
 ```
-<CUSTOMER_ID> representa o número do id do cliente 
-<PAGINA> representa o número da página requisitada
+* <CUSTOMER_ID> representa o número do id do cliente 
+* <PAGINA> representa o número da página requisitada
 
 
 
