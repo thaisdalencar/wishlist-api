@@ -55,16 +55,16 @@ mvn clean compile spring-boot:run
 mvn test
 ```
 
-## API 
+## Endpoints 
 --------
 
 ### Authentication to get token
 
 ```
-http://localhost:8080/authenticate
+POST http://{address}:8080/authenticate
 ```
 
-JSON Request:
+    Body Request:
 
 ```json
 {
@@ -72,3 +72,57 @@ JSON Request:
 	"password": "admin"
 }
 ```
+
+### Customers
+
+* Adicionar
+```
+POST http://{address}:8080/api/v1/customers
+
+ Body Request:
+```json
+{
+	"name": "name",
+	"email": "email@abc.com"
+}
+```
+
+* Atualizar
+```
+PUT http://{address}:8080/api/v1/customers/<CUSTOMER_ID>
+
+<CUSTOMER_ID> representa o número do id do cliente para ser editado
+
+Body Request:
+
+```json
+{
+	"name": "name",
+	"email": "email@abc.com"
+}
+```
+
+* Deletar
+
+```
+DELETE http://{address}:8080/api/v1/customers/<CUSTOMER_ID>
+
+<CUSTOMER_ID> representa o número do id do cliente para ser deletado
+
+```
+
+* Visualizar
+
+```
+GET http://{address}:8080/api/v1/customers/<CUSTOMER_ID>
+
+<CUSTOMER_ID> representa o número do id do cliente para ser ver
+
+GET http://{address}:8080/api/v1/customers/?page=<PAGINA>
+
+<PAGINA> representa o número da página requisitada
+
+```
+
+
+
